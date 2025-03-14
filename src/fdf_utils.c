@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils2.c                                     :+:      :+:    :+:   */
+/*   fdf_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:48:34 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/07 16:45:01 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:59:44 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "fdf.h"
 
 int	ft_isspace(char c)
 {
@@ -26,7 +26,7 @@ void	free_ptr(void **p)
 	}
 }
 
-void	free_pointers_arr(int **arr)
+void	free_int_arr(int **arr)
 {
 	int	i;
 
@@ -54,4 +54,15 @@ void	free_split(char **arr)
 		i++;
 	}
 	free(arr);
+}
+
+unsigned int	random_color(void)
+{
+	static unsigned int seed;
+
+	seed = 2463534242;
+	seed ^= seed << 13;
+	seed ^= seed >> 17;
+	seed ^= seed << 5;
+	return (seed & 0xFFFFFF);
 }

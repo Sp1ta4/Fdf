@@ -6,49 +6,34 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:03 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/11 15:34:50 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:04:05 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "fdf.h"
 
-static void	exit_print_model(void)
+int draw(void *param)
 {
-	const char	*msg1;
-	const char	*msg2;
-
-	msg1 = "Error: Insufficient arguments.\n";
-	msg2 = "Usage: ./pipex infile command1 command2 outfile\n";
-	write(2, msg1, ft_strlen(msg1));
-	write(2, msg2, ft_strlen(msg2));
-	exit(2);
+    // mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
+    return (0);
 }
 
-int	main(int argc, char **argv, char **envp)
+int main(void)
 {
-	int			is_here_doc;
-	int			infile;
-	t_cmd_info	cmd_info;
+    t_vars mlx;
 
-	if (argc && argv)
-	{
-		if (argc < 5)
-			exit_print_model();
-		is_here_doc = !ft_strncmp(argv[1], "here_doc", 8);
-		cmd_info.argv = argv;
-		cmd_info.is_hd = is_here_doc;
-		if (is_here_doc)
-			infile = do_here_doc(argv[2]);
-		else
-			infile = open(argv[1], O_RDONLY);
-		if (infile == -1)
-		{
-			perror(argv[1]);
-			exit(1);
-		}
-		dup2(infile, 0);
-		close(infile);
-		check_heredoc_and_run(argc, cmd_info, envp);
-	}
-	return (0);
+    mlx.mlx_ptr = mlx_init();
+    if (!mlx.mlx_ptr) {
+        write(2, "Error: mlx_init failed\n", 23);
+        return (1);
+    }
+    mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, 1500, 1000, "Triangle");
+    if (!mlx.win_ptr) {
+        write(2, "Error: mlx_new_window failed\n", 28);
+        return (1);
+    }
+    // Устанавливаем функцию, которая будет вызываться на каждом кадре
+    mlx_loop_hook(mlx.mlx_ptr, draw, &mlx);
+    mlx_loop(mlx.mlx_ptr); // Входим в основной цикл
+    return (0);
 }
