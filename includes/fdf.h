@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:27 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/14 14:03:42 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:38:31 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ typedef struct s_vars
 {
 	int		**map;
 	int		**temp_map;
+	int		width;
+	int		height;
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_point	win_size;
@@ -134,12 +136,19 @@ typedef struct s_vars
 	int		progress_engine;
 }	t_vars;
 
-
+int				valid_arguments(int argc, char **argv);
 int				ft_isspace(char c);
+int				**check_and_create_map(char *map_file, int *width, int *height);
+void			err_invalid_map(int code);
+void			free_split(char **split);
+char			**get_splitted_line(int fd);
+void			free_map(int **map, int rows);
+void			err_exit(char *err_msg, int exit_status);
 void			free_int_arr(int **arr);
 void			free_ptr(void **p);
 void			exit_print_model(void);
-void			draw_line(t_img *data, t_point p0, t_point p1, int color);
+void			exit_invalid_file(void);
+// void			draw_line(t_img *data, t_point p0, t_point p1, int color);
 void			free_split(char **arr);
 unsigned int	random_color(void);
 

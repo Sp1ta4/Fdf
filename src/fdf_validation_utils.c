@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_utils3.c                                       :+:      :+:    :+:   */
+/*   fdf_validation_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 14:03:10 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/18 11:40:52 by ggevorgi         ###   ########.fr       */
+/*   Created: 2025/03/18 09:12:13 by ggevorgi          #+#    #+#             */
+/*   Updated: 2025/03/18 11:40:34 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	exit_print_model(void)
+static int	is_correct_file(char *file)
 {
-	char	*msg1;
-	char	*msg2;
+	int	len;
 
-	msg1 = "Error: Insufficient arguments.\n";
-	msg2 = "Usage: ./fdf *.fdf\n";
-	ft_putstr_fd(msg1, 2);
-	ft_putstr_fd(msg2, 2);
-	exit(2);
+	len = ft_strlen(file);
+	if (len < 4)
+		return (0);
+	return (ft_strncmp(&file[len - 4], ".fdf", 4) == 0);
 }
-void	exit_invalid_file(void)
-{
-	char	*msg1;
 
-	msg1 = "Error: your file need to be *.fdf\n";
-	ft_putstr_fd(msg1, 2);
-	exit(2);
+int	valid_arguments(int argc, char **argv)
+{
+	if (argc != 2 || !argv)
+		exit_print_model();
+	if (!is_correct_file(argv[1]))
+		exit_invalid_file();
+	return (1);
 }
