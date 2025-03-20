@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:35:46 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/18 11:32:30 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:34:08 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,11 @@ char	**get_splitted_line(int fd)
 	if (!split)
 		err_invalid_map(0);
 	return (split);
+}
+
+void	init_map_mlx(t_vars *mlx, int **map, int width, int height)
+{
+	mlx->map_height = height * 50;
+	mlx->map_width = width * 50;
+	mlx->map = map;
 }

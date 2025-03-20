@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:03 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/12 17:04:33 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:43:43 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,24 @@ int close_window(int keycode, t_vars *param)
     if (keycode == 65307) // ESC key
     {
         printf("ESC key pressed, closing the window...\n");
-        mlx_loop_end(param);  // Завершаем цикл и закрываем окно
+        mlx_loop_end(param->mlx_ptr);  // Завершаем цикл и закрываем окно
     }
     return (0);
 }
 
-int mouse_button_press(int button, int x, int y, __attribute__((unused)) t_vars *param)
+int	close_window_button(t_vars *param)
 {
-    if (button == 1)  // Левая кнопка мыши
-        printf("Left mouse button clicked at %d, %d\n", x, y);
+    printf("Close button clicked, closing the window...\n");
+    mlx_loop_end(param->mlx_ptr);  // Завершаем цикл и закрываем окно
     return (0);
 }
+
+// int mouse_button_press(int button, int x, int y, __attribute__((unused)) t_vars *param)
+// {
+//     if (button == 1)  // Левая кнопка мыши
+//         printf("Left mouse button clicked at %d, %d\n", x, y);
+//     return (0);
+// }
 
 int resize_window(int width, int height, __attribute__((unused)) t_vars *param)
 {
