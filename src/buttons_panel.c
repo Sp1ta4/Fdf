@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:39:08 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/20 16:32:47 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:15:25 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_btns(t_vars *mlx)
 	init_btns_helpers(mlx);
 }
 
-static void	show_buttons_text(t_vars *vars)
+void	show_buttons_text(t_vars *vars)
 {
 	int	i;
 	int	pos_x;

@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:35:46 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/20 14:34:08 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:38:33 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,15 @@ char	**get_splitted_line(int fd)
 
 void	init_map_mlx(t_vars *mlx, int **map, int width, int height)
 {
-	mlx->map_height = height * 50;
-	mlx->map_width = width * 50;
 	mlx->map = map;
+	mlx->map_width = width;
+	mlx->map_height = height;
+	mlx->win_size.x = WINDOW_WIDTH;
+	mlx->win_size.y = WINDOW_HEIGHT;
+	mlx->img.width = WINDOW_WIDTH;
+	mlx->img.height = WINDOW_HEIGHT;
+	mlx->zoom = 20;
+	mlx->z_scale = 1;
+	mlx->offset.x = WINDOW_WIDTH / 3;
+	mlx->offset.y = WINDOW_HEIGHT / 3;
 }

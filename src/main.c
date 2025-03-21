@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:03 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/20 14:41:40 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:45:56 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int main(int argc, char **argv)
 		map = check_and_create_map(argv[1], &width, &height);
 		if (!map)
 			exit (1);
+		mlx.zoom = 20;
+		mlx.z_scale = 1;
+		mlx.offset.x = 400;
+		mlx.offset.y = 250;
 		start_rendering(&mlx, map, width, height);
 		// print_map(map, width, height);	
 		free_map(map, height);
