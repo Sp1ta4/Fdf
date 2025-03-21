@@ -6,17 +6,11 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:30:49 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 12:44:14 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:48:19 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-static void create_btns(t_vars *mlx)
-{
-	init_btns(mlx);
-	draw_buttons(mlx);
-}
 
 void	create_sidebar(t_vars *mlx, int width, int height)
 {

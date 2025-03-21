@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:34:29 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 14:59:41 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:19:16 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,12 @@ t_point project_iso(int x, int y, int z, t_vars *mlx)
 	return p;
 }
 
-void draw_map(t_vars *mlx)
+void draw_default_view(t_vars *mlx)
 {
 	int x, y;
 	t_point p1, p2;
 
 	y = 0;
-	if (!mlx->map)
-	{
- 	   write(2, "Error: map is not initialized\n", 31);
-    	exit(1);
-	}
 	while (y < mlx->map_height)
 	{
 		x = 0;
@@ -89,27 +84,80 @@ void draw_map(t_vars *mlx)
 		{
 			if (x < mlx->map_width - 1)
 			{
-			    // printf("Drawing line between (%d, %d) and (%d, %d)\n", x, y, x + 1, y);
 			    p1 = project_iso(x, y, mlx->map[y][x], mlx);
 			    p2 = project_iso(x + 1, y, mlx->map[y][x + 1], mlx);
-				// printf("Projected: (%d, %d) => (%.2d, %.2d)\n", x, y, p1.x, p1.y);
-				// printf("Projected: (%d, %d) => (%.2d, %.2d)\n", x, y, p2.x, p2.y);
-
 			    draw_line(&mlx->img, p1, p2, WHITE);
 			}
 			if (y < mlx->map_height - 1)
 			{
-			    // printf("Drawing line between (%d, %d) and (%d, %d)\n", x, y, x, y + 1);
 			    p1 = project_iso(x, y, mlx->map[y][x], mlx);
 			    p2 = project_iso(x, y + 1, mlx->map[y + 1][x], mlx);
-		
 			    draw_line(&mlx->img, p1, p2, WHITE);
 			}
-
 			x++;
 		}
 		y++;
 	}
+}
+
+void draw_side_view(t_vars *mlx)
+{
+
+}
+
+
+
+void draw_front_view(t_vars *mlx)
+{
+
+}
+
+
+
+void draw_top_view(t_vars *mlx)
+{
+    int i = 0;
+    int j;
+    t_point p0, p1;
+
+    // Основной цикл, рисующий и прямоугольники, и линии
+    while (i < mlx->map_height) // Проходим по всем строкам карты
+    {
+        j = 0;
+        while (j < mlx->map_width) // Проходим по всем столбцам
+        {
+            p0.x = j * mlx->zoom + mlx->offset.x;
+            p0.y = i * mlx->zoom + mlx->offset.y;
+            p1.x = (j + 1) * mlx->zoom + mlx->offset.x;
+            p1.y = (i + 1) * mlx->zoom + mlx->offset.y;
+
+            // Рисуем клетки
+            draw_rect(&(mlx->img), p0, p1, WHITE); 
+
+            // Если не последняя строка, рисуем линии между клетками
+            if (j < mlx->map_width - 1)
+                draw_line(&(mlx->img), p1, (t_point){p1.x + mlx->zoom, p1.y}, WHITE); // Правый край
+            if (i < mlx->map_height - 1)
+                draw_line(&(mlx->img), p1, (t_point){p1.x, p1.y + mlx->zoom}, LINE_CLR); // Нижний край
+
+            j++;
+        }
+        i++;
+    }
+}
+
+
+void draw_map(t_vars *mlx)
+{
+	if (mlx->default_view)
+		draw_default_view(mlx);
+	else if(mlx->top_view)
+		draw_top_view(mlx);
+	else if(mlx->front_view)
+		draw_front_view(mlx);
+	else if(mlx->side_view)
+		draw_side_view(mlx);
+	
 }
 
 int render(void *param)
@@ -120,7 +168,7 @@ int render(void *param)
 		return (0);
 	mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
 	clear_image(&mlx->img, mlx->win_size.x, mlx->win_size.y, BACKGROUND_COLOR);
-	create_sidebar(mlx, SIDEBAR_WIDTH, SIDEBAR_HEIGHT);
+	create_sidebar(mlx, SIDEBAR_WIDTH, SIDEBAR_HEIGHT + SIDEBAR_TOP);
 	draw_map(mlx);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img.img_ptr, 0, 0);
 	show_buttons_text(mlx);

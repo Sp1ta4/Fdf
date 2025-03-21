@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:33:32 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 13:48:23 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:14:04 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,31 @@ void	button_action(int btn_id, t_vars *vars)
 {
 	if (btn_id == 0) //Default
 	{
-
+		vars->default_view = 1;
+		vars->front_view = 0;
+		vars->side_view = 0;
+		vars->top_view = 0;
 	}
 	else if (btn_id == 1) //Front
 	{
-		
+		vars->front_view = 1;
+		vars->side_view = 0;
+		vars->top_view = 0;
+		vars->default_view = 0;
 	}
 	else if (btn_id == 2) //Right
 	{
-		
+		vars->side_view = 1;
+		vars->front_view = 0;
+		vars->default_view = 0;
+		vars->top_view = 0;
 	}
 	else if (btn_id == 3) //Top
 	{
-		
+		vars->top_view = 1;
+		vars->front_view = 0;
+		vars->side_view = 0;
+		vars->default_view = 0;
 	}
 	else if (btn_id == 4) //Zoom in +
 		zoom_in(vars);	

@@ -6,30 +6,28 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:55:40 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 15:14:54 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:54:49 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	my_mlx_pixel_put(t_img *data, t_point p, int color)
+void my_mlx_pixel_put(t_img *data, t_point p, int color)
 {
-    
-	char	*dst;
-	int		offset_x;
-	int		offset_y;
-
-	offset_x = p.x * (data->bpp / 8);
-	offset_y = p.y * data->line_length;
-	dst = data->addr + offset_y + offset_x;
-	*(unsigned int *)dst = color;
+    // Ограничиваем координаты по X и Y, чтобы не выйти за пределы изображения
+    if (p.x >= 0 && p.x < data->width && p.y >= 0 && p.y < data->height)
+    {
+        int pixel_index = (p.y * data->line_length) + (p.x * (data->bpp / 8));
+        *(unsigned int *)(data->addr + pixel_index) = color;
+    }
 }
+
 
 void draw_rect(t_img *data, t_point p0, t_point p1, int color)
 {
     t_point p2 = {p1.x, p0.y}; // верхний правый угол
     t_point p3 = {p0.x, p1.y}; // нижний левый угол
-    // Рисуем 4 стороны прямоугольника
+
     draw_line(data, p0, p2, color); // верхняя сторона
     draw_line(data, p2, p1, color); // правая сторона
     draw_line(data, p1, p3, color); // нижняя сторона

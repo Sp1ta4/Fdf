@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:27 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 14:38:16 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:14:29 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ enum
 # define WINDOW_WIDTH 1500
 # define WINDOW_HEIGHT 900
 # define SIDEBAR_WIDTH 280
-# define SIDEBAR_HEIGHT 200
+# define SIDEBAR_HEIGHT 190
 # define SIDEBAR_TOP 290
 # define LINE_CLR 0x8B008B
 # define BACKGROUND_COLOR 0x000000
@@ -124,6 +124,10 @@ typedef struct s_vars
 	t_img	img;
 	t_btn	buttons[16];
 	int		buttons_cnt;
+	int		default_view;
+	int		top_view;
+	int		side_view;
+	int		front_view;
 	int		zoom;
 	int		needs_redraw;
 	int z_scale;
@@ -136,15 +140,15 @@ typedef struct s_vars
 	// char	**row_splited;
 	// t_color	start_color;
 	// t_color	end_color;
-	int		max_z;
-	double	angle;
-	double	z_rotate;
-	double	x_rotate;
-	double	y_rotate;
-	int		motion_effect;
-	float	total_steps;
-	int	top_view;
-	int	right_click;
+	// int		max_z;
+	// double	angle;
+	// double	z_rotate;
+	// double	x_rotate;
+	// double	y_rotate;
+	// int		motion_effect;
+	// float	total_steps;
+	// int	top_view;
+	// int	right_click;
 	// int		field_size;
 	// int		progress_engine;
 }	t_vars;
@@ -176,7 +180,6 @@ void			create_sidebar(t_vars *mlx, int width, int height);
 // void			show_sidebar_content(t_vars *vars);
 int				mouse_button_press(int button, int x, int y, __attribute__((unused)) t_vars *param);
 void			draw_rect(t_img *data, t_point pos, t_point size, int color);
-void			draw_buttons(t_vars *mlx);
-void			init_btns(t_vars *mlx);
+void			create_btns(t_vars *mlx);
 
 #endif
