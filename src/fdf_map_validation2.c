@@ -6,24 +6,24 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:35:46 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 17:48:31 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 19:03:28 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void err_exit(char *err_msg, int exit_status)
+void	err_exit(char *err_msg, int exit_status)
 {
 	perror(err_msg);
-	exit(exit_status);	
+	exit(exit_status);
 }
 
 void	err_invalid_map(int code)
 {
 	if (code == 0)
-		ft_putstr_fd("Error: memory allocation failed\n", 2);	
+		ft_putstr_fd("Error: memory allocation failed\n", 2);
 	else if (code == 1)
-		ft_putstr_fd("Error: invalid map (inconsistent row length or empty line)\n", 2);
+		ft_putstr_fd("Error: inconsistent row length or empty line\n", 2);
 	else if (code == 2)
 		ft_putstr_fd("Error: empty line in map\n", 2);
 	else

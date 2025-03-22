@@ -6,18 +6,18 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:03 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 16:17:02 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 19:00:03 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int	**map;
-	int	width;
-	int	height;
-	t_vars mlx;
+	int		**map;
+	int		width;
+	int		height;
+	t_vars	mlx;
 
 	if (valid_arguments(argc, argv))
 	{

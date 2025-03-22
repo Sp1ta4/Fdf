@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:27 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 17:44:41 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 19:18:18 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,16 @@ enum
 	ORANGE = 0xFF4500,
 	FIREBRICK = 0xB22222,
 	WHITE = 0xFCFCFC,
-	SILVER = 0xC0C0C0
+	SILVER = 0xC0C0C0,
+	BACKGROUND_COLOR = 0x000000,
+	LINE_CLR = 0x8B008B
 };
 
 # define WINDOW_WIDTH 1500
 # define WINDOW_HEIGHT 900
 # define SIDEBAR_WIDTH 280
-# define SIDEBAR_HEIGHT 190
+# define SIDEBAR_HEIGHT 310
 # define SIDEBAR_TOP 290
-# define LINE_CLR 0x8B008B
-# define BACKGROUND_COLOR 0x000000
-
-typedef struct s_ij
-{
-	int	i;
-	int	j;
-}	t_ij;
 
 typedef struct s_point
 {
@@ -99,30 +93,36 @@ typedef struct s_color
 	int	b;
 }	t_color;
 
+typedef struct s_gradient
+{
+	int	color1;
+	int	color2;
+}	t_gradient;
+
+typedef struct s_views
+{
+	int	default_v;
+	int	top;
+	int	right;
+	int	front;
+}	t_views;
+
 typedef struct s_img
 {
-    void    *img_ptr;
-    char    *addr;
-    int     bpp;
-    int     line_length;
-    int     endian;
-    int     width;
-    int     height;
-} t_img;
-
+	void	*img_ptr;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_img;
 
 typedef struct s_vars
 {
 	int		**map;
 	int		map_width;
 	int		map_height;
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_point	win_size;
-	t_point sidebar_size;
-	t_point	start;
-	t_img	img;
-	t_btn	buttons[16];
 	int		buttons_cnt;
 	int		default_view;
 	int		top_view;
@@ -131,55 +131,49 @@ typedef struct s_vars
 	int		zoom;
 	int		angle;
 	int		needs_redraw;
-	int z_scale;
-	t_point offset;
-	// int		sidebar_width;
-	// int		**temp_map;
-	// int		x;
-	// int		y;
-	// char	*row;
-	// char	**row_splited;
-	// t_color	start_color;
-	// t_color	end_color;
-	// int		max_z;
-	// double	angle;
-	// double	z_rotate;
-	// double	x_rotate;
-	// double	y_rotate;
-	// int		motion_effect;
-	// float	total_steps;
-	// int	top_view;
-	// int	right_click;
-	// int		field_size;
-	// int		progress_engine;
+	int		z_scale;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_point	win_size;
+	t_point	sidebar_size;
+	t_point	start;
+	t_point	offset;
+	t_img	img;
+	t_btn	buttons[16];
 }	t_vars;
 
-void	show_buttons_text(t_vars *vars);
-void			start_rendering(t_vars *mlx, int **map, int width, int height);
-void			init_map_mlx(t_vars *mlx, int **map, int width, int height);
 int				create_trgb(int t, int r, int g, int b);
 int				close_window(int keycode, t_vars *param);
-void			my_mlx_pixel_put(t_img *data, t_point p, int color);
 int				valid_arguments(int argc, char **argv);
 int				ft_isspace(char c);
 int				**check_and_create_map(char *map_file, int *width, int *height);
+int				close_window_button(t_vars *param);
+int				mouse_button_press(int button, int x, int y, t_vars *vars);
+int				get_color(int z);
+void			show_buttons_text(t_vars *vars);
+void			start_rendering(t_vars *mlx, int **map, int width, int height);
+void			init_map_mlx(t_vars *mlx, int **map, int width, int height);
+void			my_mlx_pixel_put(t_img *data, t_point p, int color);
 void			err_invalid_map(int code);
 void			free_split(char **split);
-char			**get_splitted_line(int fd);
 void			free_map(int **map, int rows);
 void			err_exit(char *err_msg, int exit_status);
 void			free_int_arr(int **arr);
 void			free_ptr(void **p);
 void			exit_print_model(void);
 void			exit_invalid_file(void);
-int				close_window_button(t_vars *param);
-void			draw_line(t_img *data, t_point p0, t_point p1, int color);
+void			draw_line(t_img *data, t_point p0, t_point p1, t_gradient grad);
+void			zoom_in(t_vars *vars);
+void			up(t_vars *vars);
+void			down(t_vars *vars);
+void			create_window(t_vars *mlx);
+void			clear_image(t_img *img, int width, int height, int color);
 void			free_split(char **arr);
-unsigned int	random_color(void);
-void			draw_text(t_vars *mlx, char *text);
-void			create_sidebar(t_vars *mlx, int width, int height);
-int				mouse_button_press(int button, int x, int y, __attribute__((unused)) t_vars *param);
 void			draw_rect(t_img *data, t_point pos, t_point size, int color);
 void			create_btns(t_vars *mlx);
+void			draw_text(t_vars *mlx, char *text);
+void			create_sidebar(t_vars *mlx, int width, int height);
+char			**get_splitted_line(int fd);
+unsigned int	random_color(void);
 
 #endif

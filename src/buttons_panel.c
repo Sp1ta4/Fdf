@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:39:08 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 15:48:53 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:34:26 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ static void	init_btns_helpers(t_vars *mlx)
 	mlx->buttons[4].content = "Zoom in +";
 	// mlx->buttons[4].action = zoom_in_action;
 	mlx->buttons[5].content = "Zoom out -";
+	mlx->buttons[6].content = "Left X";
+	mlx->buttons[7].content = "Right X";
+	mlx->buttons[8].content = "Down Y";
+	mlx->buttons[9].content = "Up Y";
 	// mlx->buttons[5].action = zoom_out_action;
 }
 
@@ -50,7 +54,7 @@ void create_btns(t_vars *mlx)
     int i;
     int gap;
 
-    mlx->buttons_cnt = 6;
+    mlx->buttons_cnt = 10;
     gap = 10;
     i = 0;
     while (i < mlx->buttons_cnt)
