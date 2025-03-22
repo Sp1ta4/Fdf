@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:33:32 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 16:14:04 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:14:01 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,30 @@
 
 void zoom_in(t_vars *vars)
 {
-	vars->zoom += 4;
-	if (vars->zoom > 45)
-		vars->zoom = 45;
+    vars->zoom += 4;
+    if (vars->zoom > 45)
+        vars->zoom = 45;
+
+    vars->z_scale = vars->zoom / 6;
+    if (vars->z_scale > 7)
+        vars->z_scale = 7;
+
+    vars->needs_redraw = 1;
 }
+
 void zoom_out(t_vars *vars)
 {
-	vars->zoom -= 4;
-	if (vars->zoom < 10)
-		vars->zoom = 10;
+    vars->zoom -= 4;
+    if (vars->zoom < 10)
+        vars->zoom = 10;
+
+    vars->z_scale = vars->zoom / 6;
+    if (vars->z_scale < 1)
+        vars->z_scale = 1;
+
+    vars->needs_redraw = 1;
 }
+
 
 
 void	button_action(int btn_id, t_vars *vars)
@@ -60,6 +74,7 @@ void	button_action(int btn_id, t_vars *vars)
 		zoom_in(vars);	
 	else if (btn_id == 5) //Zoom out -
 		zoom_out(vars);
+	
 }
 
 int	mouse_button_press(__attribute__((unused)) int button, int x, int y, t_vars *vars)

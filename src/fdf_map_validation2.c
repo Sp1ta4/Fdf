@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:35:46 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 16:15:08 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 17:48:31 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,5 @@ void	init_map_mlx(t_vars *mlx, int **map, int width, int height)
 	mlx->front_view = 0;
 	mlx->side_view = 0;
 	mlx->top_view = 0;
+	mlx->angle = 30;
 }

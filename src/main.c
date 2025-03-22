@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:03 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 16:12:08 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 16:17:02 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int main(int argc, char **argv)
 		mlx.offset.x = 400;
 		mlx.offset.y = 250;
 		start_rendering(&mlx, map, width, height);
+		mlx_destroy_display(mlx.mlx_ptr);
 		free_map(map, height);
 		return (0);
 	}

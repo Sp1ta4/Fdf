@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:34:29 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 16:19:16 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 17:44:49 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void create_window(t_vars *mlx)
 	mlx->mlx_ptr = mlx_init();
 	if (!mlx->mlx_ptr) {
 		write(2, "Error: mlx_init failed\n", 23);
+		mlx_destroy_display(mlx->mlx_ptr);
 		free_map(mlx->map, mlx->map_width);
 		exit(1);
 	}
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->win_size.x, mlx->win_size.y, "FDF");
 	if (!mlx->win_ptr) {
 		write(2, "Error: mlx_new_window failed\n", 28);
+		mlx_destroy_display(mlx->mlx_ptr);
 		free_map(mlx->map, mlx->map_width);
 		exit(1);
 	}
@@ -40,7 +42,6 @@ void create_window(t_vars *mlx)
 
 void	setup_hooks(t_vars *mlx)
 {
-	// Подключаем функцию обработки нажатия мыши
 	mlx_mouse_hook(mlx->win_ptr, mouse_button_press, mlx);
 }
 
@@ -63,15 +64,35 @@ void	clear_image(t_img *img, int width, int height, int color)
 
 t_point project_iso(int x, int y, int z, t_vars *mlx)
 {
-	t_point p;
-	double angle = 30 * M_PI / 180; // 30 градусов в радианах
+    t_point p;
+    double angle = mlx->angle * M_PI / 180.0;
 
-	p.x = (x - y) * cos(angle) * mlx->zoom + mlx->offset.x;
-	p.y = (x + y) * sin(angle) * mlx->zoom - z * mlx->z_scale + mlx->offset.y;
-	return p;
+    if (mlx->top_view) // Вид сверху
+    {
+        p.x = x * mlx->zoom + mlx->offset.x / 1.5;
+        p.y = y * mlx->zoom + mlx->offset.y;
+    }
+    else if (mlx->front_view) // Вид спереди
+    {
+        p.x = x * mlx->zoom + mlx->offset.x / 1.5;
+        p.y = -z * mlx->z_scale + mlx->offset.y * 1.5;
+    }
+    else if (mlx->side_view) // Вид сбоку
+    {
+        p.x = y * mlx->zoom + mlx->offset.x / 1.4;
+        p.y = -z * mlx->z_scale + mlx->offset.y * 1.5;
+    }
+    else // Изометрия по умолчанию
+    {
+        p.x = (x - y) * cos(angle) * mlx->zoom + mlx->offset.x;
+        p.y = (x + y) * sin(angle) * mlx->zoom - z * mlx->z_scale + mlx->offset.y / 1.5;
+    }
+    return p;
 }
 
-void draw_default_view(t_vars *mlx)
+
+
+void draw_view(t_vars *mlx)
 {
 	int x, y;
 	t_point p1, p2;
@@ -100,65 +121,19 @@ void draw_default_view(t_vars *mlx)
 	}
 }
 
-void draw_side_view(t_vars *mlx)
-{
-
-}
-
-
-
-void draw_front_view(t_vars *mlx)
-{
-
-}
-
-
-
-void draw_top_view(t_vars *mlx)
-{
-    int i = 0;
-    int j;
-    t_point p0, p1;
-
-    // Основной цикл, рисующий и прямоугольники, и линии
-    while (i < mlx->map_height) // Проходим по всем строкам карты
-    {
-        j = 0;
-        while (j < mlx->map_width) // Проходим по всем столбцам
-        {
-            p0.x = j * mlx->zoom + mlx->offset.x;
-            p0.y = i * mlx->zoom + mlx->offset.y;
-            p1.x = (j + 1) * mlx->zoom + mlx->offset.x;
-            p1.y = (i + 1) * mlx->zoom + mlx->offset.y;
-
-            // Рисуем клетки
-            draw_rect(&(mlx->img), p0, p1, WHITE); 
-
-            // Если не последняя строка, рисуем линии между клетками
-            if (j < mlx->map_width - 1)
-                draw_line(&(mlx->img), p1, (t_point){p1.x + mlx->zoom, p1.y}, WHITE); // Правый край
-            if (i < mlx->map_height - 1)
-                draw_line(&(mlx->img), p1, (t_point){p1.x, p1.y + mlx->zoom}, LINE_CLR); // Нижний край
-
-            j++;
-        }
-        i++;
-    }
-}
-
-
 void draw_map(t_vars *mlx)
 {
-	if (mlx->default_view)
-		draw_default_view(mlx);
-	else if(mlx->top_view)
-		draw_top_view(mlx);
-	else if(mlx->front_view)
-		draw_front_view(mlx);
-	else if(mlx->side_view)
-		draw_side_view(mlx);
-	
+    if (mlx->default_view)
+        mlx->angle = 30;
+    else if (mlx->top_view)
+        mlx->angle = 0;
+    else if (mlx->front_view)
+        mlx->angle = 90;
+    else if (mlx->side_view)
+        mlx->angle = -90;
+    draw_view(mlx); // Теперь все виды используют одну функцию
 }
+
 
 int render(void *param)
 {

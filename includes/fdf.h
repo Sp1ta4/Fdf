@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:27 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/21 16:14:29 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/22 17:44:41 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct s_vars
 	int		side_view;
 	int		front_view;
 	int		zoom;
+	int		angle;
 	int		needs_redraw;
 	int z_scale;
 	t_point offset;
@@ -177,7 +178,6 @@ void			free_split(char **arr);
 unsigned int	random_color(void);
 void			draw_text(t_vars *mlx, char *text);
 void			create_sidebar(t_vars *mlx, int width, int height);
-// void			show_sidebar_content(t_vars *vars);
 int				mouse_button_press(int button, int x, int y, __attribute__((unused)) t_vars *param);
 void			draw_rect(t_img *data, t_point pos, t_point size, int color);
 void			create_btns(t_vars *mlx);
