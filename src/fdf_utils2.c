@@ -6,76 +6,71 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:55:40 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 19:01:39 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:04:24 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void my_mlx_pixel_put(t_img *data, t_point p, int color)
+void	my_mlx_pixel_put(t_img *data, t_point p, int color)
 {
-    if (p.x >= 0 && p.x < data->width && p.y >= 0 && p.y < data->height)
-    {
-        int pixel_index = (p.y * data->line_length) + (p.x * (data->bpp / 8));
-        *(unsigned int *)(data->addr + pixel_index) = color;
-    }
+	int	pixel_index;
+
+	if (p.x >= 0 && p.x < data->width && p.y >= 0 && p.y < data->height)
+	{
+		pixel_index = (p.y * data->l_length) + (p.x * (data->bpp / 8));
+		*(unsigned int *)(data->addr + pixel_index) = color;
+	}
 }
 
-void draw_rect(t_img *data, t_point p0, t_point p1, int color)
+void	draw_rect(t_img *data, t_point p0, t_point p1, int color)
 {
-    t_point p2 = {p1.x, p0.y};
-    t_point p3 = {p0.x, p1.y};
+	t_point	p2;
+	t_point	p3;
 
-    draw_line(data, p0, p2, (t_gradient){color, color});
-    draw_line(data, p2, p1, (t_gradient){color, color});
-    draw_line(data, p1, p3, (t_gradient){color, color});
-    draw_line(data, p3, p0, (t_gradient){color, color});
+	p2 = (t_point){p1.x, p0.y};
+	p3 = (t_point){p0.x, p1.y};
+	draw_line(data, (t_line){p0, p2, 0}, (t_grad){color, color});
+	draw_line(data, (t_line){p2, p1, 0}, (t_grad){color, color});
+	draw_line(data, (t_line){p1, p3, 0}, (t_grad){color, color});
+	draw_line(data, (t_line){p3, p0, 0}, (t_grad){color, color});
 }
 
-void init_line(t_point p0, t_point p1, t_line *line)
+void	init_line(t_point p0, t_point p1, t_line *line)
 {
-    line->delta.x = abs(p1.x - p0.x);
-    line->delta.y = abs(p1.y - p0.y);
-
-    if (p0.x < p1.x)
-        line->steps.x = 1;
-    else
-        line->steps.x = -1;
-
-    if (p0.y < p1.y)
-        line->steps.y = 1;
-    else
-        line->steps.y = -1;
-
-    line->err = line->delta.x - line->delta.y;
-}
-void			draw_line(t_img *data, t_point p0, t_point p1, t_gradient grad)
-{
-    double dx = abs(p1.x - p0.x);
-    double dy = abs(p1.y - p0.y);
-    double steps = (dx > dy) ? dx : dy;
-    double x_step = (p1.x - p0.x) / steps;
-    double y_step = (p1.y - p0.y) / steps;
-    double x = p0.x;
-    double y = p0.y;
-
-    int i = 0;
-    while (i <= steps)
-    {
-        double t = i / steps;
-        int r = ((1 - t) * ((grad.color1 >> 16) & 0xFF) + t * ((grad.color2 >> 16) & 0xFF));
-        int g = ((1 - t) * ((grad.color1 >> 8) & 0xFF) + t * ((grad.color2 >> 8) & 0xFF));
-        int b = ((1 - t) * (grad.color1 & 0xFF) + t * (grad.color2 & 0xFF));
-        int color = (r << 16) | (g << 8) | b;
-
-        my_mlx_pixel_put(data, (t_point){(int)x, (int)y}, color);
-        x += x_step;
-        y += y_step;
-        i++;
-    }
+	line->delta.x = abs(p1.x - p0.x);
+	line->delta.y = abs(p1.y - p0.y);
+	if (p0.x < p1.x)
+		line->steps.x = 1;
+	else
+		line->steps.x = -1;
+	if (p0.y < p1.y)
+		line->steps.y = 1;
+	else
+		line->steps.y = -1;
+	line->err = line->delta.x - line->delta.y;
 }
 
-void draw_text(t_vars *mlx, char *text)
+void	init_line_vars(t_line_vars *vars, t_point p0, t_point p1)
 {
-    mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 50, 50, 0xFFFFFF, text);
+	vars->dx = abs(p1.x - p0.x);
+	vars->dy = abs(p1.y - p0.y);
+	if (vars->dx > vars->dy)
+		vars->steps = vars->dx;
+	else
+		vars->steps = vars->dy;
+	vars->x_step = (p1.x - p0.x) / vars->steps;
+	vars->y_step = (p1.y - p0.y) / vars->steps;
+	vars->x = p0.x;
+	vars->y = p0.y;
+}
+
+void	compute_color(t_grad grad, double t, t_color *color)
+{
+	color->r = (int)((1 - t) * ((grad.color1 >> 16) & 0xFF)
+			+ t * ((grad.color2 >> 16) & 0xFF));
+	color->g = (int)((1 - t) * ((grad.color1 >> 8) & 0xFF)
+			+ t * ((grad.color2 >> 8) & 0xFF));
+	color->b = (int)((1 - t) * (grad.color1 & 0xFF)
+			+ t * (grad.color2 & 0xFF));
 }

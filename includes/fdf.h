@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:27 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/24 14:45:28 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:07:57 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,9 @@ int				get_color(int z);
 void			show_buttons_text(t_vars *vars);
 void			start_rendering(t_vars *mlx, int **map, int width, int height);
 void			init_map_mlx(t_vars *mlx, int **map, int width, int height);
-void	compute_color(t_grad grad, double t, t_color *color);
-void	init_line_vars(t_line_vars *vars, t_point p0, t_point p1);
+void			compute_color(t_grad grad, double t, t_color *color);
+void			init_line_vars(t_line_vars *vars, t_point p0, t_point p1);
+void			draw_view(t_vars *mlx);
 void			my_mlx_pixel_put(t_img *data, t_point p, int color);
 void			err_invalid_map(int code);
 void			free_split(char **split);
