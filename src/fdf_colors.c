@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:17:07 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 19:05:21 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:13:15 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ unsigned int	random_color(void)
 	return (seed & 0xFFFFFF);
 }
 
-int get_color(int z)
+int	get_color(int z)
 {
-    if (z > 0)
-        return 0xE52B50;
-    else if (z < 0)
-        return 0x6495ED;
-    return 0x3EB489;
+	if (z > 0)
+		return (RED);
+	else if (z < 0)
+		return (BLUE);
+	return (GREEN);
 }

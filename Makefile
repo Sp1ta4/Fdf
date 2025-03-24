@@ -4,9 +4,6 @@ NAME = fdf
 SRC_DIR = src
 LIBFT_DIR = libft
 MINILIBX_DIR = minilibx-linux
-
-# MacOS
-# LDFLAGS = -L$(MINILIBX_DIR) -lmlx -framework OpenGL -framework AppKit
 LDFLAGS = -Lminilibx-linux -lmlx -L/usr/lib -lXext -lX11 -lm -lbsd
 INCLUDE = -I includes -I $(MINILIBX_DIR)
 

@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:27 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 19:18:18 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:45:28 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ enum
 enum
 {
 	ORANGE = 0xFF4500,
+	RED = 0xE52B50,
+	BLUE = 0x6495ED,
+	GREEN = 0x3EB489,
 	FIREBRICK = 0xB22222,
 	WHITE = 0xFCFCFC,
 	SILVER = 0xC0C0C0,
@@ -97,7 +100,7 @@ typedef struct s_gradient
 {
 	int	color1;
 	int	color2;
-}	t_gradient;
+}	t_grad;
 
 typedef struct s_views
 {
@@ -112,11 +115,22 @@ typedef struct s_img
 	void	*img_ptr;
 	char	*addr;
 	int		bpp;
-	int		line_length;
+	int		l_length;
 	int		endian;
 	int		width;
 	int		height;
 }	t_img;
+
+typedef struct s_line_vars
+{
+	double	dx;
+	double	dy;
+	double	steps;
+	double	x_step;
+	double	y_step;
+	double	x;
+	double	y;
+}	t_line_vars;
 
 typedef struct s_vars
 {
@@ -153,6 +167,8 @@ int				get_color(int z);
 void			show_buttons_text(t_vars *vars);
 void			start_rendering(t_vars *mlx, int **map, int width, int height);
 void			init_map_mlx(t_vars *mlx, int **map, int width, int height);
+void	compute_color(t_grad grad, double t, t_color *color);
+void	init_line_vars(t_line_vars *vars, t_point p0, t_point p1);
 void			my_mlx_pixel_put(t_img *data, t_point p, int color);
 void			err_invalid_map(int code);
 void			free_split(char **split);
@@ -162,7 +178,8 @@ void			free_int_arr(int **arr);
 void			free_ptr(void **p);
 void			exit_print_model(void);
 void			exit_invalid_file(void);
-void			draw_line(t_img *data, t_point p0, t_point p1, t_gradient grad);
+void			clg(t_point p, t_vars *mlx, t_line *line, t_grad *grad);
+void			draw_line(t_img *data, t_line line, t_grad grad);
 void			zoom_in(t_vars *vars);
 void			up(t_vars *vars);
 void			down(t_vars *vars);
@@ -173,7 +190,9 @@ void			draw_rect(t_img *data, t_point pos, t_point size, int color);
 void			create_btns(t_vars *mlx);
 void			draw_text(t_vars *mlx, char *text);
 void			create_sidebar(t_vars *mlx, int width, int height);
+void			left(t_vars *vars);
 char			**get_splitted_line(int fd);
+t_point			project_iso(int x, int y, int z, t_vars *mlx);
 unsigned int	random_color(void);
 
 #endif
