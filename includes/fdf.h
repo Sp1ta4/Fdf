@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:27 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/24 15:07:57 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:55:40 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ int				**check_and_create_map(char *map_file, int *width, int *height);
 int				close_window_button(t_vars *param);
 int				mouse_button_press(int button, int x, int y, t_vars *vars);
 int				get_color(int z);
+void			exit_program(t_vars *vars);
+void			free_data_exit(int **map, int row, char **split, int code);
 void			show_buttons_text(t_vars *vars);
 void			start_rendering(t_vars *mlx, int **map, int width, int height);
 void			init_map_mlx(t_vars *mlx, int **map, int width, int height);

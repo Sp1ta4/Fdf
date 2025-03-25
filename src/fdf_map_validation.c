@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:29:45 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 18:37:29 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:02:49 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ static int	*convert_to_int_array(char **split, int expected_count)
 
 	if (count_words(split) != expected_count)
 	{
-		free_split(split);
-		err_invalid_map(1);
+		ft_putstr_fd("Error: inconsistent row length or empty line\n", 2);
+		return (NULL);
 	}
 	arr = malloc(sizeof(int) * expected_count);
 	if (!arr)
 	{
-		free_split(split);
-		err_invalid_map(0);
+		ft_putstr_fd("Error: memory allocation failed\n", 2);
+		return (NULL);
 	}
 	i = 0;
 	while (i < expected_count)
@@ -85,19 +85,20 @@ static int	**create_map(int map_fd, int width, int height, int *first_line)
 	map = malloc(sizeof(int *) * height);
 	if (!map)
 		err_invalid_map(0);
+	if (!first_line)
+		free_data_exit(map, 0, NULL, 1);
 	map[0] = first_line;
-	row = 1;
-	while (row < height)
+	row = 0;
+	while (++row < height)
 	{
 		split = get_splitted_line(map_fd);
 		if (!split)
-		{
-			free_map(map, row);
-			err_invalid_map(1);
-		}
+			free_data_exit(map, row, split, 1);
 		map[row] = convert_to_int_array(split, width);
-		free_split(split);
-		row++;
+		if (!map[row])
+			free_data_exit(map, row, split, 0);
+		if (split)
+			free_split(split);
 	}
 	return (map);
 }
@@ -121,7 +122,8 @@ int	**check_and_create_map(char *map_file, int *width, int *height)
 	}
 	*width = count_words(first_line_str);
 	first_line = convert_to_int_array(first_line_str, *width);
-	free_split(first_line_str);
+	if (first_line_str)
+		free_split(first_line_str);
 	map = create_map(map_fd, *width, *height, first_line);
 	close(map_fd);
 	return (map);

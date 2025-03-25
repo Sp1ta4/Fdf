@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 12:23:55 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/24 14:44:54 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:58:44 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,16 @@ void	draw_line(t_img *data, t_line line, t_grad grad)
 		v.y += v.y_step;
 		i++;
 	}
+}
+
+void	free_data_exit(int **map, int row, char **split, int code)
+{
+	if (map)
+		free_map(map, row);
+	if (split)
+		free_split(split);
+	if (code)
+		err_invalid_map(code);
+	if (!code)
+		exit(1);
 }

@@ -6,11 +6,22 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:03 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 19:00:03 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:00:45 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	exit_program(t_vars *vars)
+{
+	if (vars->win_ptr)
+		mlx_destroy_window(vars->mlx_ptr, vars->win_ptr);
+	if (vars->img.img_ptr)
+		mlx_destroy_image(vars->mlx_ptr, vars->img.img_ptr);
+	mlx_destroy_display(vars->mlx_ptr);
+	free(vars->mlx_ptr);
+	free_map(vars->map, vars->map_height);
+}
 
 int	main(int argc, char **argv)
 {
@@ -28,9 +39,9 @@ int	main(int argc, char **argv)
 		mlx.z_scale = 1;
 		mlx.offset.x = 400;
 		mlx.offset.y = 250;
+		mlx.win_ptr = NULL;
 		start_rendering(&mlx, map, width, height);
-		mlx_destroy_display(mlx.mlx_ptr);
-		free_map(map, height);
+		exit_program(&mlx);
 		return (0);
 	}
 	return (1);

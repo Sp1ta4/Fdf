@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:35:46 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 19:03:28 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:03:37 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ char	**get_splitted_line(int fd)
 	if (line[0] == '\n' || line[0] == '\0')
 	{
 		free(line);
+		line = NULL;
 		return (NULL);
 	}
 	split = ft_split(line, ' ');
 	free(line);
 	if (!split)
 		err_invalid_map(0);
+	line = NULL;
 	return (split);
 }
 

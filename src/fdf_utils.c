@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 13:48:34 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/22 19:03:58 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:14:11 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ void	free_split(char **arr)
 	while (arr[i])
 	{
 		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
 	free(arr);
+	arr = NULL;
 }

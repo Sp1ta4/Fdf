@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:03:10 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/24 12:26:35 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:59:20 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	exit_invalid_file(void)
 void	window_err(t_vars *mlx, char *err_msg)
 {
 	write(2, err_msg, ft_strlen(err_msg));
-	mlx_destroy_display(mlx->mlx_ptr);
-	free_map(mlx->map, mlx->map_width);
+	exit_program(mlx);
 	exit(1);
 }
 
@@ -49,7 +48,7 @@ void	init_img(t_vars *m)
 	i->img_ptr = mlx_new_image(m->mlx_ptr, m->win_size.x, m->win_size.y);
 	if (!i->img_ptr)
 	{
-		write(2, "Error: mlx_new_image failed\n", 28);
+		window_err(m, "Error: mlx_new_image failed\n");
 		exit(1);
 	}
 	i->addr = mlx_get_data_addr(i->img_ptr, &i->bpp, &i->l_length, &i->endian);
