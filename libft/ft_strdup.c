@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 18:16:24 by ggevorgi          #+#    #+#             */
-/*   Updated: 2024/10/27 18:27:33 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:30:13 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 char	*ft_strdup(const char *s)
 {
-	size_t	i;
-	char	*res;
+	char	*dup;
+	size_t	len;
 
-	i = -1;
-	res = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!res)
+	if (!s)
 		return (NULL);
-	while (s[++i] != '\0')
-		res[i] = s[i];
-	res[i] = '\0';
-	return (res);
+	len = ft_strlen(s) + 1;
+	dup = (char *)malloc(len);
+	if (!dup)
+		return (NULL);
+	ft_memcpy(dup, s, len);
+	return (dup);
 }
