@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:28:03 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/26 17:17:05 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:28:32 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	exit_program(t_vars *vars)
 	mlx_destroy_display(vars->mlx_ptr);
 	free(vars->mlx_ptr);
 	free_map(vars->map, vars->map_height);
+	get_next_line(-1);
 }
 
 int	main(int argc, char **argv)

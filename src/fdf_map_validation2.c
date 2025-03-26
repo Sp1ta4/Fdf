@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:35:46 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/26 18:05:46 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:29:18 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	err_exit(char *err_msg, int exit_status)
 {
 	perror(err_msg);
+	get_next_line(-1);
 	exit(exit_status);
 }
 

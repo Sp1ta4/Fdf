@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 16:12:22 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/26 18:23:52 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:29:55 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static int	check_buffer(char **buffer, int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
 		if (buffer && *buffer)
+		{
 			free(*buffer);
+			*buffer = NULL;
+		}
 		return (0);
 	}
 	if (!*buffer)
