@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:33:32 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/24 14:25:27 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:42:02 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,18 @@ void	right(t_vars *vars)
 
 void	zoom_out(t_vars *vars)
 {
-	vars->zoom -= 4;
-	if (vars->zoom < 4)
-		vars->zoom = 4;
-	vars->z_scale = vars->zoom / 6;
-	if (vars->z_scale < 1)
+	if (vars->zoom > 12)
+	{
+		vars->zoom -= 4;
+		vars->z_scale -= 0.1;
+		if (vars->z_scale < 1)
+			vars->z_scale = 1;
+	}
+	if (vars->zoom <= 12)
+	{
+		vars->zoom = 12;
 		vars->z_scale = 1;
+	}
 	vars->needs_redraw = 1;
 }
 

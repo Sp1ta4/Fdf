@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:29:45 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/25 14:02:49 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:10:50 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ int	**check_and_create_map(char *map_file, int *width, int *height)
 		free_split(first_line_str);
 	map = create_map(map_fd, *width, *height, first_line);
 	close(map_fd);
+	get_next_line(-1);
 	return (map);
 }

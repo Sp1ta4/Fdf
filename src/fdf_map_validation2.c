@@ -6,7 +6,7 @@
 /*   By: ggevorgi <sp1tak.gg@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:35:46 by ggevorgi          #+#    #+#             */
-/*   Updated: 2025/03/25 14:03:37 by ggevorgi         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:05:46 by ggevorgi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	err_invalid_map(int code)
 		ft_putstr_fd("Error: empty line in map\n", 2);
 	else
 		ft_putstr_fd("Error: unknown error\n", 2);
+	get_next_line(-1);
 	exit(1);
 }
 
@@ -51,6 +52,7 @@ char	**get_splitted_line(int fd)
 		return (NULL);
 	if (line[0] == '\n' || line[0] == '\0')
 	{
+		printf("fsdfsdf\n");
 		free(line);
 		line = NULL;
 		return (NULL);
